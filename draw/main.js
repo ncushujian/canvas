@@ -12,6 +12,19 @@ var pageHeight=document.documentElement.clientHeight;
 canvas.width=pageWidth;
 canvas.height=pageHeight;
 
+// 离屏canvas
+var offCanvas = document.createElement("canvas");
+var offContext = offCanvas.getContext('2d');
+offCanvas.width = pageWidth;
+offCanvas.height = pageHeight;
+
+var img = new Image();
+img.src = './border.png';
+img.onload = function () {
+  offContext.drawImage(img, 0, 0, pageWidth, pageHeight);
+  hua.drawImage(offCanvas, 0, 0, pageWidth, pageHeight);
+};
+
 //屏幕尺寸发生变化时
 window.onresize=function () {
     var pageWidth=document.documentElement.clientWidth;
@@ -122,6 +135,7 @@ if(document.body.ontouchstart===null){//或者不等于undefined
         }else{
             star={x:x,y:y};
             dian(x,y,r);
+            hua.drawImage(offCanvas, 0, 0, pageWidth, pageHeight);
         }
     };
     //触摸移动事件
@@ -136,6 +150,7 @@ if(document.body.ontouchstart===null){//或者不等于undefined
                 line(star.x,star.y,newStar.x,newStar.y);
                 dian(x,y,r);
                 star=newStar;//将新点覆盖旧点
+                hua.drawImage(offCanvas, 0, 0, pageWidth, pageHeight);
             }
         }
     };
