@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>路径绘制</title>
+</head>
+<body>
+  <canvas id="canvas" width="1000px" height="800px"></canvas>
+  <script>
+    var canvas = document.getElementById('canvas');
+    var context = canvas.getContext('2d');
+
+    // 绘制文字
+    // 一定要设置字体，要不然字号无法生效
+    context.font = '60px Helvetica';
+    context.lineWidth = 2;
+    context.fillStyle = 'red';
+    context.strokeStyle = 'blue';
+
+    context.strokeText('stroke', 60, 110);
+    context.fillText('fill', 440, 110);
+    context.strokeText('stroke & fill', 650, 110);
+    context.fillText('stroke & fill', 650, 110);
+
+    // 长方形
+    context.lineWidth = 5;
+    context.beginPath();
+    // rect(x, y. width, height)
+    context.rect(60, 150, 150, 100);
+    context.stroke();
+
+    context.beginPath();
+    context.rect(400, 150, 150, 100);
+    context.fill();
+
+    // beginPath() 表示重新找个地方起笔，如果没有beginPath的话，前面的画的两个长方形，会受stroke()的影响；
+    // 标准化的解释是：将当前路径的子路径全部清除掉
+    context.beginPath();
+    context.rect(680, 150, 150, 100);
+    context.stroke();
+    context.fill();
+
+    // 开放路径
+    context.beginPath();
+    // arc(x, y, r, sAngle, eAngle, counterclockwise);
+    // https://www.w3school.com.cn/tags/canvas_arc.asp
+    context.arc(120, 370, 60, 0, Math.PI * 3 / 2);
+    context.stroke();
+
+    context.beginPath();
+    context.arc(740, 370, 60, 0, Math.PI * 3 / 2);
+    context.stroke();
+    context.fill();
+
+    // 闭合路径
+    context.beginPath();
+    context.arc(120, 570, 60, 0, Math.PI * 3 / 2);
+    context.closePath();
+    context.stroke();
+
+    // 总结
+    // arc() 和 rect() 是用来创建路径的，差不多可以比喻为使用隐形墨水来绘图
+  </script>
+</body>
+</html>

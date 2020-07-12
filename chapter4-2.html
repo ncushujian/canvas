@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>离屏canvas</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas" width="600" height="400"></canvas>
+  <script>
+    var canvas = document.getElementById('canvas');
+    var context = canvas.getContext('2d');
+
+    var w = canvas.width;
+    var h = canvas.height;
+
+    context.lineWidth = 10;
+    context.moveTo(0, 200);
+    context.lineTo(600, 200);
+    context.stroke();
+    
+    // 创建离屏canvas
+    var offCanvas = document.createElement('canvas');
+    offCanvas.width = 600;
+    offCanvas.height = 400;
+    var offContext = offCanvas.getContext('2d');
+    var img = new Image();
+    img.src = './border.png';
+    img.onload = function () {
+      offContext.drawImage(img, 0, 0, w, h);
+      context.drawImage(offCanvas, 0, 0, w, h);
+    };
+  </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>基础知识</title>
+  <style>
+    canvas {
+      margin-bottom: 30px;
+      background-color: antiquewhite;
+    }
+  </style>
+</head>
+<body>
+  <!-- canvas 默认大小 300px * 150px -->
+  <canvas id="canvas" width="300" height="300">
+    canvas not support
+  </canvas>
+  <script>
+    var canvas = document.getElementById('canvas');
+    var context = canvas.getContext('2d');
+
+    context.font = "38px Arial";
+    context.fillStyle = "red";
+    // 描边样式 - 颜色
+    context.strokeStyle = "blue";
+    // 填充
+    context.fillText('Hello Canvas', canvas.width/2 - 150, canvas.height/2 + 15);
+    // 描边
+    context.strokeText('Hello Canvas', canvas.width/2 - 150, canvas.height/2 + 15);
+    // 转化坐标，window窗口坐标转化为canvas元素坐标
+    function windowToCanvas (canvas, x, y) {
+      var box = canvas.getBoundingClientRect();
+      return {
+        x: (x - box.left) * (canvas.width/box.width),
+        y: (y - box.top) * (canvas.height/box.height)
+      };
+    }
+    canvas.onmousemove = function (e) {
+      var loc = windowToCanvas(canvas, e.clientX, e.clientY);
+      console.log(loc);
+    }
+  </script>
+</body>
+</html>
